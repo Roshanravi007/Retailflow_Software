@@ -1,4 +1,6 @@
 // App.jsx
+// Main application file for RetailFlow SaaS platform
+// Built with React, Tailwind CSS, react-router-dom, and Recharts
 import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
@@ -8,6 +10,8 @@ import {
   useNavigate,
 } from "react-router-dom";
 
+/* ---------------- Navigation Bar ---------------- */
+// Provides top-level navigation links for the app
 function Navigation() {
   return (
     <nav className="bg-gray-800 text-white px-4 py-2 flex gap-4">
@@ -33,12 +37,15 @@ function Navigation() {
   );
 }
 
+/* ---------------- Login Page ---------------- */
+// Handles user login flow, simple simulated authentication with redirect
 export function LoginPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  // On form submission, navigate to dashboard (mock login logic)
+ const handleSubmit = (e) => {
     e.preventDefault();
     // Simulate login logic
     navigate("/dashboard");
@@ -52,6 +59,8 @@ export function LoginPage() {
         <p className="text-center text-gray-500 mb-6 text-sm">
           Sign in to your account
         </p>
+
+        {/* Login form with controlled inputs */}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label htmlFor="email" className="block mb-1 font-medium">
@@ -67,6 +76,8 @@ export function LoginPage() {
               required
             />
           </div>
+
+           {/* Password input */}
           <div>
             <label htmlFor="password" className="block mb-1 font-medium">
               Password
@@ -81,6 +92,8 @@ export function LoginPage() {
               required
             />
           </div>
+
+          {/* Submit button */}
           <button
             type="submit"
             className="w-full bg-gray-900 text-white py-2 rounded"
@@ -89,6 +102,7 @@ export function LoginPage() {
           </button>
         </form>
 
+        {/* Social login options */}
         <div className="my-6 flex items-center justify-center text-sm text-gray-500">
           <span className="border-t w-full"></span>
           <span className="px-4">OR CONTINUE WITH</span>
@@ -115,7 +129,8 @@ export function LoginPage() {
             Continue with Microsoft
           </button>
         </div>
-
+        
+        {/* Extra login links */}
         <div className="text-center mt-4 text-sm">
           <p className="text-blue-600 cursor-pointer">Forgot your password?</p>
           <p className="mt-2">
@@ -130,6 +145,8 @@ export function LoginPage() {
   );
 }
 
+/* ---------------- Placeholder Component ---------------- */
+// Used as a generic placeholder for pages not yet implemented
 function Placeholder({ title }) {
   return (
     <div className="p-8">
@@ -138,6 +155,9 @@ function Placeholder({ title }) {
     </div>
   );
 }
+
+/* ---------------- Recharts Imports ---------------- */
+// Chart components used in Dashboard and Analytics
 import {
   BarChart,
   Bar,
@@ -153,8 +173,7 @@ import {
   Cell,
 } from "recharts";
 
-
-
+/* ---------------- Sample Chart Data ---------------- */
 const data = [
   { name: "Mon", success: 140, failed: 5 },
   { name: "Tue", success: 135, failed: 7 },
@@ -165,17 +184,22 @@ const data = [
   { name: "Sun", success: 130, failed: 4 },
 ];
 
-
+/* ---------------- Dashboard ---------------- */
+// Displays key stats, workflow activity, connected apps, and quick actions
 function Dashboard() {
+  const navigate = useNavigate(); 
   return (
     <div className="p-6 space-y-6 bg-gray-50 min-h-screen">
       <header className="flex justify-between items-center border-b pb-4">
         <h1 className="text-3xl font-bold">Dashboard</h1>
-        <button className="bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700">
+        <button 
+        onClick={() => navigate("/workflows")}
+        className="bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700">
           Create New Workflow
         </button>
       </header>
 
+      {/* Statistic summary cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <StatCard
           title="Active Workflows"
@@ -198,7 +222,8 @@ function Dashboard() {
           subtitle="records this month"
         />
       </div>
-
+      
+      {/* Workflow activity chart */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="bg-white p-4 rounded shadow">
           <h2 className="text-lg font-semibold mb-2">
@@ -218,8 +243,11 @@ function Dashboard() {
             </BarChart>
           </ResponsiveContainer>
         </div>
+        
+      </div>
 
-        <div className="bg-white p-4 rounded shadow">
+      {/* Connected Apps summary */}
+      <div className="bg-white p-4 rounded shadow">
           <h2 className="text-lg font-semibold mb-2">Connected Apps</h2>
           <p className="text-sm text-gray-500 mb-4">
             Your integrated platforms
@@ -246,28 +274,32 @@ function Dashboard() {
                   {app.status}
                 </span>
               </div>
-              <button className="text-sm text-blue-600 hover:underline">
+              <button 
+                className="text-sm text-blue-600 hover:underline"
+                onClick={() => navigate("/integrations")} 
+              >
                 {app.status === "connected" ? "Manage" : "Connect"}
               </button>
             </div>
           ))}
-        </div>
-      </div>
-
+      </div> 
       <div className="bg-white p-4 rounded shadow">
         <h2 className="text-lg font-semibold mb-2">Quick Actions</h2>
         <p className="text-sm text-gray-500 mb-4">
           Common tasks to get you started
         </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+
+        {/* Quick Actions section */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 gap-4">
           {[
-            { title: "Create New Workflow", icon: "⚡" },
-            { title: "Add New Integration", icon: "🔗" },
-            { title: "View Analytics", icon: "📊" },
-            { title: "Browse Templates", icon: "📄" },
+            { title: "Create New Workflow", icon: "⚡", to: "/workflows" },
+            { title: "Add New Integration", icon: "🔗", to: "/integrations" },
+            { title: "View Analytics", icon: "📊", to: "/analytics"  },
+            
           ].map((action) => (
             <div
               key={action.title}
+              onClick={() => navigate(action.to)} 
               className="flex flex-col items-center justify-center border p-4 rounded hover:bg-gray-50 cursor-pointer"
             >
               <span className="text-2xl mb-2">{action.icon}</span>
@@ -280,7 +312,8 @@ function Dashboard() {
   );
 }
 
-// Small stat card component used in dashboard
+/* ---------------- Stat Card ---------------- */
+// Small reusable card for dashboard stats
 export function StatCard({ title, value, subtitle }) {
   
   return (
@@ -292,12 +325,14 @@ export function StatCard({ title, value, subtitle }) {
   );
 }
   
-
- 
+/* ---------------- Integrations ---------------- */
+// Displays a catalog of available/connected integrations (apps).
+// Allows users to connect new apps or manage existing ones via a modal popup. 
 function Integrations() {
   const [modalApp, setModalApp] = React.useState(null);
   const [connectMode, setConnectMode] = React.useState(false);
-
+  
+  // Static list of integrations with metadata
   const integrations = [
     {
       name: "Shopify",
@@ -342,7 +377,8 @@ function Integrations() {
       icon: "📊",
     },
   ];
-
+  
+  // Handlers for connecting / managing apps
   const handleConnect = (app) => {
     setModalApp(app);
     setConnectMode(true);
@@ -365,6 +401,8 @@ function Integrations() {
         placeholder="Search for apps (e.g., 'Shopify', 'NetSuite')"
         className="mb-6 p-2 border rounded w-full"
       />
+
+      {/* App Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {integrations.map((app) => (
           <div
@@ -390,6 +428,8 @@ function Integrations() {
                 {app.status}
               </span>
             </div>
+
+            {/* Card Body */}
             <p className="mt-2 text-sm text-gray-600">{app.description}</p>
             <button
               className={`mt-4 w-full rounded border px-4 py-2 ${
@@ -409,7 +449,7 @@ function Integrations() {
         ))}
       </div>
 
-      {/* Modal */}
+      {/* Modal for Connect/Manage Integration */}
       {modalApp && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
@@ -427,6 +467,7 @@ function Integrations() {
               </button>
             </div>
 
+            {/* Conditional modal content */}
             {connectMode ? (
               <form className="space-y-4">
                 <div>
@@ -466,6 +507,8 @@ function Integrations() {
                 </div>
               </form>
             ) : (
+
+              // Manage view
               <div>
                 <div className="bg-green-100 text-green-700 px-4 py-2 rounded mb-4">
                   <strong>● Connected successfully</strong>
@@ -493,13 +536,18 @@ function Integrations() {
     </div>
   );
 }
+
+/* ---------------- Workflow Builder ---------------- */
+// Allows users to design workflows by selecting triggers and actions from integrated apps.
+// Supports multi-step configuration: (1) Select Trigger → (2) Select Actions → (3) Save workflow
 export function WorkflowBuilder({ setSavedWorkflows }) {
   const [step, setStep] = useState("trigger");
   const [selectedTriggerApp, setSelectedTriggerApp] = useState(null);
   const [selectedTrigger, setSelectedTrigger] = useState(null);
   const [selectedActionApp, setSelectedActionApp] = useState(null);
   const [selectedActions, setSelectedActions] = useState({});
-
+  
+  // Map of trigger events per app
   const triggerOptions = {
     Shopify: [
       "New Order Created",
@@ -524,7 +572,9 @@ export function WorkflowBuilder({ setSavedWorkflows }) {
       "Task Created",
     ],
   };
-
+  
+  
+  // Map of available actions per app
   const actionOptions = {
     NetSuite: [
       "Create Sales Order",
@@ -567,7 +617,9 @@ export function WorkflowBuilder({ setSavedWorkflows }) {
 
   const triggerApps = Object.keys(triggerOptions);
   const actionApps = Object.keys(actionOptions);
+
   // V V V PASTE THE FUNCTION LOGIC RIGHT HERE V V V
+  // Save workflow to parent state (and localStorage via App.js)
   const handleSaveWorkflow = async () => {
     const workflowData = {
       trigger: {
@@ -589,7 +641,6 @@ export function WorkflowBuilder({ setSavedWorkflows }) {
       alert("An error occurred.");
     }
   };
-
   // ^ ^ ^ END OF THE FUNCTION LOGIC ^ ^ ^
 
   return (
@@ -796,6 +847,10 @@ export function WorkflowBuilder({ setSavedWorkflows }) {
     </div>
   );
 }
+
+/* ---------------- Saved Workflows ---------------- */
+// Displays list of workflows that have been saved by the user.
+// Provides option to clear all saved workflows
 export function SavedWorkflows({ savedWorkflows, setSavedWorkflows }) {
   const clearAll = () => {
     setSavedWorkflows([]);
@@ -841,7 +896,6 @@ export function SavedWorkflows({ savedWorkflows, setSavedWorkflows }) {
 }
 
 //const COLORS = ["#8884d8", "#82ca9d", "#ffc658", "#ff8042"];
-
 const timeRanges = ["Last 7 days", "Last 30 days", "Last 90 days", "Last year"];
 const channels = ["All Channels", "Shopify", "Amazon", "WooCommerce"];
 const reportTypes = [
@@ -850,11 +904,16 @@ const reportTypes = [
   "Customer & Marketing",
 ];
 
+/* ---------------- Analytics ---------------- */
+// Multi-tab analytics dashboard with report types:
+// (1) Sales Performance, (2) Inventory Performance, (3) Customer & Marketing.
+// Each report shows different charts/tables using Recharts.
 function Analytics() {
   const [selectedTime, setSelectedTime] = useState("Last 30 days");
   const [selectedChannel, setSelectedChannel] = useState("All Channels");
   const [reportType, setReportType] = useState("Sales Performance");
-
+  
+  // Demo datasets for charts
   const salesData = [
     { date: "Jul 1", sales: 30000 },
     { date: "Jul 2", sales: 40000 },
@@ -1171,6 +1230,10 @@ function Analytics() {
     </div>
   );
 }
+
+/* ---------------- Settings ---------------- */
+// Centralized settings page with three tabs:
+// (1) API Keys management, (2) User Management (Team + Roles), (3) Compliance & GDPR tools.
 function Settings() {
   const tabs = [
     "API Keys",
@@ -1182,8 +1245,11 @@ function Settings() {
     // "RBAC",
     //"Data Mapping"
   ];
-
+  
+  // API keys list and management
   const [activeTab, setActiveTab] = useState("API Keys");
+
+   // Team members & roles data
   const [activeSubTab, setActiveSubTab] = useState("Team Members");
   const [apiKeys, setApiKeys] = useState([
     {
@@ -1510,17 +1576,24 @@ function Settings() {
   );
 }
 
+/* ---------------- Main App ---------------- */
+// Root component that initializes state, loads from localStorage, and sets up routes
 export default function App() {
   const [savedWorkflows, setSavedWorkflows] = useState([]);
-
+  
+  // Load workflows from localStorage on mount
   useEffect(() => {
     const stored = localStorage.getItem("savedWorkflows");
     if (stored) setSavedWorkflows(JSON.parse(stored));
+    document.title="Retailflow";
   }, []);
-
+  
+  // Persist workflows whenever they change
   useEffect(() => {
     localStorage.setItem("savedWorkflows", JSON.stringify(savedWorkflows));
   }, [savedWorkflows]);
+
+  // Define app routes
   return (
     <Router>
       <Navigation />
