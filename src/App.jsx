@@ -171,6 +171,7 @@ import {
   PieChart,
   Pie,
   Cell,
+  Legend
 } from "recharts";
 
 /* ---------------- Sample Chart Data ---------------- */
@@ -224,7 +225,7 @@ function Dashboard() {
       </div>
       
       {/* Workflow activity chart */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4">
         <div className="bg-white p-4 rounded shadow">
           <h2 className="text-lg font-semibold mb-2">
             Recent Workflow Activity
@@ -335,6 +336,20 @@ function Integrations() {
   // Static list of integrations with metadata
   const integrations = [
     {
+      name: "SendGrid",
+      category: "Email Delivery Service",
+      description: "Cloud-based email delivery service for transactional and marketing email.",
+      status: "connected",
+      icon: "✉️",
+    },
+    {
+      name: "Slack",
+      category: "Collaboration",
+      description: "Business communication and collaboration platform",
+      status: "connected",
+      icon: "💬",
+    },
+    {
       name: "Shopify",
       category: "E-commerce",
       description: "E-commerce platform for online stores",
@@ -352,29 +367,309 @@ function Integrations() {
       name: "WooCommerce",
       category: "E-commerce",
       description: "WordPress e-commerce plugin",
-      status: "available",
+      status: "connected",
       icon: "🛒",
     },
     {
       name: "Salesforce",
       category: "CRM",
       description: "Customer relationship management platform",
-      status: "available",
+      status: "connected",
       icon: "☁️",
+    },
+    {
+      name: "Monday.com",
+      category: "CRM",
+      description: "Work OS for managing teams, projects, and processes.",
+      status: "available",
+      icon: "🟣",
+    },
+    {
+      name: "Infor",
+      category: "ERP",
+      description: "Industry-specific cloud ERP solutions for enterprises.",
+      status: "available",
+      icon: "🏭",
+    },
+    {
+      name: "BigCommerce",
+      category: "E-commerce",
+      description: "Leading e-commerce platform for growing businesses.",
+      status: "available",
+      icon: "🅱️",
     },
     {
       name: "Magento",
       category: "E-commerce",
       description: "Open-source e-commerce platform",
-      status: "available",
+      status: "connected",
       icon: "🎯",
     },
     {
       name: "QuickBooks",
       category: "Accounting",
       description: "Accounting software for small businesses",
-      status: "available",
+      status: "connected",
       icon: "📊",
+    },
+    {
+      name: "SAP S/4HANA Cloud",
+      category: "ERP",
+      description: "Intelligent, integrated ERP system",
+      status: "available",
+      icon: "🏢",
+    },
+    {
+      name: "Epicor",
+      category: "ERP",
+      description: "ERP software for manufacturing, distribution, and retail.",
+      status: "available",
+      icon: "⚙️",
+    },
+    {
+      name: "Ecwid",
+      category: "E-commerce",
+      description: "E-commerce platform to sell on any website or social media.",
+      status: "available",
+      icon: "🇪",
+    },
+    {
+      name: "Pipedrive",
+      category: "CRM",
+      description: "Sales-focused CRM for managing deals and pipelines.",
+      status: "available",
+      icon: "🔥",
+    },
+    {
+      name: "Freshsales",
+      category: "CRM",
+      description: "Sales CRM software for deal management",
+      status: "available",
+      icon: "📈",
+    },
+    {
+      name: "Sage X3",
+      category: "ERP",
+      description: "Business management software for enterprises",
+      status: "connected",
+      icon: "🌐",
+    },
+    {
+      name: "Zoho CRM",
+      category: "CRM",
+      description: "On-demand CRM for managing customer relations",
+      status: "available",
+      icon: "🚀",
+    },
+    {
+      name: "HubSpot",
+      category: "CRM",
+      description: "Full platform of marketing, sales, and service software",
+      status: "connected",
+      icon: "🧡",
+    },
+    {
+      name: "Insightly",
+      category: "CRM",
+      description: "CRM for building and managing customer relationships",
+      status: "available",
+      icon: "👁️",
+    },
+    {
+      name: "Adobe Commerce",
+      category: "E-commerce",
+      description: "Enterprise-level platform for e-commerce and cloud solutions",
+      status: "connected",
+      icon: "🅰️",
+    },
+    {
+      name: "Sage Intacct",
+      category: "ERP",
+      description: "Cloud financial management and accounting software.",
+      status: "available",
+      icon: "🧾",
+    },
+    {
+      name: "Volusion",
+      category: "E-commerce",
+      description: "All-in-one e-commerce website builder and shopping cart.",
+      status: "available",
+      icon: "🛒",
+    },
+    {
+      name: "Apptivo",
+      category: "CRM",
+      description: "Integrated suite of apps for managing business activities.",
+      status: "available",
+      icon: "📲",
+    },
+    {
+      name: "Oracle ERP Cloud",
+      category: "ERP",
+      description: "Cloud-based suite for finance, project management, and procurement.",
+      status: "available",
+      icon: "☁️",
+    },
+    {
+      name: "Wix",
+      category: "E-commerce",
+      description: "Website builder with integrated e-commerce capabilities.",
+      status: "available",
+      icon: "🇼",
+    },
+    {
+      name: "SugarCRM",
+      category: "CRM",
+      description: "CRM platform for sales, marketing, and customer service automation.",
+      status: "available",
+      icon: "🍬",
+    },
+    {
+      name: "Deltek",
+      category: "ERP",
+      description: "ERP solutions for project-based businesses.",
+      status: "available",
+      icon: "🏗️",
+    },
+    {
+      name: "Hostinger",
+      category: "E-commerce",
+      description: "Website builder with integrated e-commerce features.",
+      status: "available",
+      icon: "🇭",
+    },
+    {
+      name: "Microsoft Dynamics 365",
+      category: "CRM",
+      description: "Suite of intelligent business applications (ERP and CRM).",
+      status: "available",
+      icon: "Ⓜ️",
+    },
+    {
+      name: "SYSPRO",
+      category: "ERP",
+      description: "ERP software for manufacturers and distributors.",
+      status: "available",
+      icon: "🔩",
+    },
+    {
+      name: "OpenCart",
+      category: "E-commerce",
+      description: "Free and open-source e-commerce platform.",
+      status: "available",
+      icon: "🌐",
+    },
+    {
+      name: "Keap",
+      category: "CRM",
+      description: "CRM and marketing automation for small businesses.",
+      status: "available",
+      icon: "💡",
+    },
+    {
+      name: "Weebly",
+      category: "E-commerce",
+      description: "Website and e-commerce builder with customizable templates.",
+      status: "available",
+      icon: "📄",
+    },
+    {
+      name: "IFS Cloud",
+      category: "ERP",
+      description: "ERP suite for managing assets, projects, and supply chains.",
+      status: "available",
+      icon: "🛰️",
+    },
+    {
+      name: "Zendesk Sell",
+      category: "CRM",
+      description: "Sales CRM to enhance productivity and pipeline visibility.",
+      status: "available",
+      icon: "📈",
+    },
+    {
+      name: "Acumatica",
+      category: "ERP",
+      description: "Cloud-based ERP for small and mid-sized businesses.",
+      status: "available",
+      icon: "📈",
+    },
+    {
+      name: "Squarespace",
+      category: "E-commerce",
+      description: "Website builder with tools for selling products and services.",
+      status: "available",
+      icon: "🔳",
+    },
+    {
+      name: "Act!",
+      category: "CRM",
+      description: "CRM and marketing automation for small to medium businesses.",
+      status: "available",
+      icon: "❗",
+    },
+    {
+      name: "Odoo ERP",
+      category: "ERP",
+      description: "Open-source suite of integrated business management apps.",
+      status: "available",
+      icon: "🐢",
+    },
+    {
+      name: "Shift4Shop",
+      category: "E-commerce",
+      description: "Comprehensive e-commerce platform for online businesses.",
+      status: "available",
+      icon: "🛒",
+    },
+    {
+      name: "Nutshell",
+      category: "CRM",
+      description: "All-in-one CRM and email marketing platform.",
+      status: "available",
+      icon: "🥜",
+    },
+    {
+      name: "Crafted ERP",
+      category: "ERP",
+      description: "ERP software for the craft beverage industry.",
+      status: "available",
+      icon: "🍺",
+    },
+    {
+      name: "PrestaShop",
+      category: "E-commerce",
+      description: "Open-source e-commerce solution for online stores.",
+      status: "available",
+      icon: "🛒",
+    },
+    {
+      name: "Salesmate",
+      category: "CRM",
+      description: "CRM for sales teams to accelerate sales processes.",
+      status: "available",
+      icon: "🤝",
+    },
+    {
+      name: "Brightpearl",
+      category: "ERP",
+      description: "Retail operating system for inventory, orders, and financials.",
+      status: "available",
+      icon: "💎",
+    },
+    {
+      name: "Bluehost",
+      category: "E-commerce",
+      description: "Web hosting with an integrated online store builder.",
+      status: "available",
+      icon: "🔵",
+    },
+    {
+      name: "Nimble",
+      category: "CRM",
+      description: "Social CRM for relationship management across platforms.",
+      status: "available",
+      icon: "🏃",
     },
   ];
   
@@ -549,33 +844,170 @@ export function WorkflowBuilder({ setSavedWorkflows }) {
   
   // Map of trigger events per app
   const triggerOptions = {
-    Shopify: [
+   Shopify: [
       "New Order Created",
       "Product Updated",
       "Customer Account Created",
       "Order Cancelled",
       "Inventory Level Updated",
       "New Product Added",
+      "Order Paid",
+      "Shipment Status Updated",
+      "New Blog Post",
+      "Cart Abandoned",
+      // --- 6 More Shopify Triggers ---
+      "New Collection Created",
+      "Product Added to Collection",
+      "Fulfillment Event Created",
+      "New Payout",
+      "Refund Created",
+      "Tender Transaction Created",
     ],
-    NetSuite: ["Sales Order Created", "Inventory Updated", "Customer Modified"],
-    WooCommerce: [
+     NetSuite: [
+      "Sales Order Created",
+      "Inventory Updated",
+      "Customer Modified",
+      "New Invoice",
+      "Item Record Created",
+      "Purchase Order Received",
+      "Vendor Bill Approved",
+      "Employee Record Updated",
+       // --- 8 More NetSuite Triggers ---
+      "New Customer",
+      "New Vendor",
+      "Journal Entry Created",
+      "Item Fulfillment Created",
+      "Cash Sale Created",
+      "Expense Report Approved",
+      "Return Authorization Created",
+      "Credit Memo Created",
+    ],
+      WooCommerce: [
       "Order Placed",
       "Product Stock Changed",
       "Customer Registered",
+      "New Coupon Created",
+      "Order Status Changed",
+      "Product Deleted",
+      "New Product Review",
+      "Subscription Created",
+      // --- 8 More WooCommerce Triggers ---
+      "New Product Category",
+      "Product Low in Stock",
+      "Order Note Added",
+      "Customer Updated",
+      "Order Refunded",
+      "Product Back in Stock",
+      "New Downloadable Product",
+      "Customer Login",
     ],
-    Salesforce: [
+      Salesforce: [
       "Lead Created",
       "Opportunity Created",
       "Contact Updated",
       "Account Updated",
       "Case Created",
       "Task Created",
+      "Campaign Member Added",
+      "New Platform Event",
+      "Opportunity Stage Changed",
+      "Case Comment Added",
+      // --- 6 More Salesforce Triggers ---
+      "New Attachment",
+      "Updated Record",
+      "New Event",
+      "Deleted Record",
+      "New Outbound Message",
+      "Login Event",
     ],
+      "Sage X3": [
+      "New Sales Order", "Stock Movement", "New Customer Created",
+      "Supplier Invoice Created", "New Purchase Order", "Delivery Record Created",
+      "Work Order Completed", "Payment Received", "New Product Record",
+      "Credit Memo Issued", "New Supplier Created", "Bill of Materials Updated",
+      "New GL Journal Entry", "Shipment Validated", "Customer Record Updated",
+      "Manufacturing Order Started",
+    ],
+      HubSpot: [
+      "New Contact Added to List", "Contact Property Changed", "New Deal Created",
+      "Deal Stage Changed", "New Company Created", "Form Submission",
+      "Email Link Clicked", "Marketing Email Opened", "New Ticket Created",
+      "Contact Unsubscribed", "New Blog Post Published", "Call Completed",
+      "Meeting Booked", "Task Completed", "New Quote Issued",
+      "Conversation Started",
+    ],
+      "Adobe Commerce": [
+      "New Order", "Product Created", "Customer Registered", "Invoice Paid",
+      "Shipment Created", "Credit Memo Issued", "New Review Submitted",
+      "Product Price Updated", "Cart Abandoned", "Customer Group Changed",
+      "New Search Term", "Catalog Rule Applied", "Product Attribute Updated",
+      "Inventory Source Changed", "Order Status Updated", "Customer Logged In",
+    ],
+      Magento: [
+        // 16 Triggers for Magento
+        "New Order", "New Customer", "Product Created", "Inventory Changed",
+        "Order Status Updated", "New Invoice", "Shipment Created",
+        "Credit Memo Created", "Customer Logged In", "Cart Abandoned",
+        "New Review Submitted", "Product Deleted", "Category Created",
+        "Customer Address Updated", "Order Comment Added", "New Search Term",
+    ],
+      QuickBooks: [
+        // 16 Triggers for QuickBooks
+        "New Invoice", "Invoice Paid", "New Customer", "New Vendor",
+        "New Bill", "Bill Paid", "New Sales Receipt", "New Estimate",
+        "Estimate Accepted", "New Purchase Order", "New Expense",
+        "Payment Received", "Customer Updated", "Item Created",
+        "New Credit Memo", "Time Activity Created",
+    ],
+      Slack: [
+        // 16 Triggers for Slack
+        "New Message in Channel", "Keyword Mentioned", "User Joins Channel",
+        "New File Uploaded", "Reaction Added", "New Private Message",
+        "New Channel Created", "User Profile Changed", "App Mentioned",
+        "Message Pinned", "User Leaves Channel", "New Slash Command",
+        "Channel Archived", "Reminder Triggered", "User Status Changed",
+        "File Shared Publicly",
+    ],
+      SendGrid: [
+        // 16 Triggers for SendGrid
+        "Email Opened", "Link Clicked", "Email Delivered", "Email Bounced",
+        "Recipient Unsubscribed", "Marked as Spam", "New Contact Added to List",
+        "Email Processed", "Email Dropped", "Subscription Activated",
+        "Contact List Created", "Template Version Activated", "Sender Identity Verified",
+        "Email Deferred", "Group Unsubscribed", "Contact Property Changed",
+    ],
+
   };
   
   
   // Map of available actions per app
   const actionOptions = {
+    Shopify: [
+      "Create Customer",
+      "Update Customer",
+      "Create Order",
+      "Update Order",
+      "Create Product",
+      "Update Inventory Level",
+      // --- 4 More Actions ---
+      "Fulfill Order",
+      "Create Discount Code",
+      "Add Tag to Customer",
+      "Cancel Order",
+    ],
+     WooCommerce: [
+      "Create Customer",
+      "Update Order Status",
+      "Create Product",
+      "Update Product Stock",
+      "Create Coupon",
+      // --- 5 More Actions ---
+      "Process Refund",
+      "Add Note to Order",
+      "Update Product",
+      "Delete Customer",
+      "Add Product Tag",
+    ],
     NetSuite: [
       "Create Sales Order",
       "Update Inventory Item",
@@ -583,35 +1015,106 @@ export function WorkflowBuilder({ setSavedWorkflows }) {
       "Create Invoice",
       "Find and Update Sales Order",
       "Item Record",
+      // --- 3 More Actions ---
+      "Create Purchase Order",
+      "Fulfill Sales Order",
+      "Accept Customer Payment",
     ],
     Salesforce: [
       "Create Lead",
       "Update Contact",
       "Create Opportunity",
       "Send Email",
+      // --- 5 More Actions ---
+      "Create Account",
+      "Create Task",
+      "Add Note to Record",
+      "Convert Lead",
+      "Create Case",
     ],
     Magento: [
       "Update Product",
       "Create Customer",
       "Process Order",
       "Update Inventory",
+      // --- 5 More Actions ---
+      "Create Invoice",
+      "Create Shipment",
+      "Add Comment to Order",
+      "Cancel Order",
+      "Add Product to Category",
     ],
     QuickBooks: [
       "Create Invoice",
       "Add Customer",
       "Record Payment",
       "Update Item",
+      // --- 5 More Actions ---
+      "Create Bill",
+      "Create Estimate",
+      "Add Vendor",
+      "Create Sales Receipt",
+      "Create Purchase Order",
     ],
     Slack: [
       "Send Channel Message",
       "Send Direct Message",
       "Create Channel",
       "Invite User To Channel",
+      // --- 5 More Actions ---
+      "Set Channel Topic",
+      "Pin Message to Channel",
+      "Update User Profile",
+      "Add Reminder",
+      "Upload File",
     ],
     SendGrid: [
       "Send Email",
       "Add or Update Contact in a list",
       "Unsubscribe User",
+      // --- 5 More Actions ---
+      "Create List",
+      "Delete List",
+      "Remove Contact from List",
+      "Send Templated Email",
+      "Add Contact to Suppression List",
+      "Get Email Statistics",
+    ],
+    "Sage X3": [
+      "Create Sales Quote",
+      "Update Stock Level",
+      "Add Supplier",
+      "Generate Customer Invoice",
+      "Create Purchase Order",
+      "Receive Stock",
+      "Create Customer",
+      "Update Customer Credit Limit",
+      "Create Sales Order",
+      "Process Shipment",
+    ],
+    "HubSpot": [
+      "Create Contact",
+      "Update Deal Stage",
+      "Add Contact to Workflow",
+      "Log a Call",
+      "Send Marketing Email",
+      "Create Company",
+      "Update Contact Property",
+      "Create Ticket",
+      "Add Note to Contact",
+      "Create Deal",
+    ],
+    "Adobe Commerce": [
+      "Create Product",
+      "Update Order Status",
+      "Add Customer to Group",
+      "Manage Inventory",
+      "Create Invoice for Order",
+      "Add Comment to Order",
+      "Create Shipment",
+      "Cancel Order",
+      "Update Product Price",
+      "Add Product to Category",
     ],
   };
 
@@ -671,7 +1174,8 @@ export function WorkflowBuilder({ setSavedWorkflows }) {
       {step === "trigger" && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
           <div>
-            <h2 className="text-xl font-semibold mb-2">Connected Apps</h2>
+            <h2 className="text-3xl font-bold mb-6">Connected Apps</h2>
+            <h3 className="text-xl font-semibold text-gray-800 mb-1">Choose Trigger App</h3>
             <p className="text-sm text-gray-500 mb-4">
               Select an app to see available triggers
             </p>
@@ -899,9 +1403,9 @@ export function SavedWorkflows({ savedWorkflows, setSavedWorkflows }) {
 const timeRanges = ["Last 7 days", "Last 30 days", "Last 90 days", "Last year"];
 const channels = ["All Channels", "Shopify", "Amazon", "WooCommerce"];
 const reportTypes = [
-  "Sales Performance",
-  "Inventory Performance",
-  "Customer & Marketing",
+  "E-Commerce",
+  "ERP",
+  "CRM",
 ];
 
 /* ---------------- Analytics ---------------- */
@@ -911,7 +1415,7 @@ const reportTypes = [
 function Analytics() {
   const [selectedTime, setSelectedTime] = useState("Last 30 days");
   const [selectedChannel, setSelectedChannel] = useState("All Channels");
-  const [reportType, setReportType] = useState("Sales Performance");
+  const [reportType, setReportType] = useState("E-Commerce");
   
   // Demo datasets for charts
   const salesData = [
@@ -1031,6 +1535,22 @@ function Analytics() {
     { category: "Clothing", ratio: 5.1 },
     { category: "Electronics", ratio: 6.4 },
   ];
+  const customerSegmentData = [
+  { name: "New Customers", value: 450 },
+  { name: "Returning Customers", value: 530 },
+  ];
+  const clvByChannelData = [
+  { channel: "Organic Search", clv: 450 },
+  { channel: "Paid Social", clv: 380 },
+  { channel: "Email Marketing", clv: 620 },
+  { channel: "Referral", clv: 750 },
+  ];
+  const poStatusData = [
+  { name: "Draft", value: 15 },
+  { name: "Pending Approval", value: 8 },
+  { name: "Ordered", value: 25 },
+  { name: "Fulfilled", value: 95 },
+  ];
 
   return (
     <div className="p-6 space-y-6">
@@ -1047,7 +1567,7 @@ function Analytics() {
         </select>
       </div>
 
-      {reportType === "Sales Performance" && (
+      {reportType === "E-Commerce" && (
         <>
           <div className="flex gap-4">
             <select
@@ -1070,10 +1590,10 @@ function Analytics() {
             </select>
           </div>
 
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-2 gap-6 items-stretch">
             <div className="bg-white p-4 rounded shadow">
               <h3 className="font-semibold mb-2">Total Sales Over Time</h3>
-              <ResponsiveContainer width="100%" height={200}>
+              <ResponsiveContainer width="100%" height={350}>
                 <LineChart data={salesData}>
                   <XAxis dataKey="date" />
                   <YAxis />
@@ -1085,7 +1605,7 @@ function Analytics() {
             </div>
             <div className="bg-white p-4 rounded shadow">
               <h3 className="font-semibold mb-2">Sales by Channel</h3>
-              <ResponsiveContainer width="100%" height={200}>
+              <ResponsiveContainer width="100%" height={350}>
                 <PieChart>
                   <Pie
                     data={channelData}
@@ -1093,7 +1613,7 @@ function Analytics() {
                     nameKey="name"
                     cx="50%"
                     cy="50%"
-                    outerRadius={60}
+                    outerRadius={90}
                   >
                     {channelData.map((_, index) => (
                       <Cell
@@ -1108,10 +1628,10 @@ function Analytics() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-2 gap-6 items-stretch">
             <div className="bg-white p-4 rounded shadow">
               <h3 className="font-semibold mb-2">Sales by Product Category</h3>
-              <ResponsiveContainer width="100%" height={200}>
+              <ResponsiveContainer width="100%" height={400}>
                 <BarChart data={categorySales}>
                   <XAxis dataKey="name" />
                   <YAxis />
@@ -1146,87 +1666,151 @@ function Analytics() {
                 </tbody>
               </table>
             </div>
+            
           </div>
         </>
       )}
 
-      {reportType === "Inventory Performance" && (
-        <div className="grid grid-cols-2 gap-6">
-          <div className="bg-white p-4 rounded shadow">
-            <h3 className="font-semibold text-sm">Total Items in Stock</h3>
-            <p className="text-3xl font-bold mt-2">8,247</p>
-            <p className="text-green-500 text-sm">+2.1% from last month</p>
-          </div>
-          <div className="bg-white p-4 rounded shadow">
-            <h3 className="font-semibold text-sm">Average Days to Sell</h3>
-            <p className="text-3xl font-bold mt-2">12.4</p>
-            <p className="text-red-500 text-sm">-1.3 days from last month</p>
-          </div>
+      {reportType === "ERP" && (
+  <>
+    {/* --- First Row --- */}
+    <div className="grid grid-cols-2 gap-6 mb-6">
+      <div className="bg-white p-4 rounded shadow">
+        <h3 className="font-semibold text-sm">Total Items in Stock</h3>
+        <p className="text-3xl font-bold mt-2">8,247</p>
+        <p className="text-green-500 text-sm">+2.1% from last month</p>
+      </div>
+      <div className="bg-white p-4 rounded shadow">
+        <h3 className="font-semibold text-sm">Average Days to Sell</h3>
+        <p className="text-3xl font-bold mt-2">12.4</p>
+        <p className="text-red-500 text-sm">-1.3 days from last month</p>
+      </div>
 
-          <div className="col-span-2 bg-white p-4 rounded shadow">
-            <h3 className="font-semibold mb-2">
-              Inventory Turnover Ratio by Product Category
-            </h3>
-            <ResponsiveContainer width="100%" height={250}>
-              <BarChart layout="vertical" data={inventoryTurnover}>
-                <XAxis type="number" />
-                <YAxis type="category" dataKey="category" />
-                <Tooltip />
-                <Bar dataKey="ratio" fill="#60a5fa" />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-      )}
+      <div className="col-span-2 bg-white p-4 rounded shadow">
+        <h3 className="font-semibold mb-2">Inventory Turnover Ratio by Product Category</h3>
+        <ResponsiveContainer width="100%" height={250}>
+          <BarChart layout="vertical" data={inventoryTurnover}>
+            <XAxis type="number" />
+            <YAxis type="category" dataKey="category" />
+            <Tooltip />
+            <Bar dataKey="ratio" fill="#60a5fa" />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+    </div>
 
-      {reportType === "Customer & Marketing" && (
-        <div className="grid grid-cols-2 gap-6">
-          <div className="bg-white p-4 rounded shadow">
-            <h3 className="font-semibold mb-2">Customer Profitability</h3>
-            <ResponsiveContainer width="100%" height={200}>
-              <LineChart data={profitabilityData}>
-                <XAxis dataKey="month" />
-                <YAxis />
-                <Tooltip />
-                <CartesianGrid strokeDasharray="3 3" />
-                <Line
-                  type="monotone"
-                  dataKey="clv"
-                  stroke="#4f46e5"
-                  name="CLV"
-                />
-                <Line
-                  type="monotone"
-                  dataKey="cac"
-                  stroke="#f59e0b"
-                  name="CAC"
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-          <div className="bg-white p-4 rounded shadow">
-            <h3 className="font-semibold mb-2">Sales Funnel</h3>
-            <div className="space-y-2">
-              {funnelData.map((f, i) => (
-                <div key={i}>
-                  <div className="flex justify-between text-sm">
-                    <span>{f.stage}</span>
-                    <span>{f.value.toLocaleString()}</span>
-                  </div>
-                  <div className="w-full bg-gray-200 h-2 rounded">
-                    <div
-                      className="bg-indigo-500 h-2 rounded"
-                      style={{
-                        width: `${(f.value / funnelData[0].value) * 100}%`,
-                      }}
-                    />
-                  </div>
-                </div>
+    {/* --- Second Row --- */}
+    <div className="grid grid-cols-1 gap-6">
+      {/* NEW Purchase Order Status Chart */}
+      <div className="bg-white p-4 rounded shadow">
+        <h3 className="font-semibold mb-2">Purchase Order Status</h3>
+        <ResponsiveContainer width="100%" height={400}>
+          <PieChart>
+            <Pie
+              data={poStatusData}
+              dataKey="value"
+              nameKey="name"
+              cx="50%"
+              cy="50%"
+              outerRadius={150}
+            >
+              {poStatusData.map((_, index) => (
+                <Cell key={index} fill={["#a5b4fc", "#fcd34d", "#60a5fa", "#4ade80"][index % 4]} />
               ))}
+            </Pie>
+            <Tooltip />
+            <Legend />
+          </PieChart>
+        </ResponsiveContainer>
+      </div>
+    </div>
+  </>
+)}
+
+      {reportType === "CRM" && (
+  // Use a React Fragment to wrap the two rows
+  <>
+    {/* --- First Row --- */}
+    <div className="grid grid-cols-2 gap-6 mb-6"> {/* Added margin-bottom for spacing */}
+      
+      {/* 1. Customer Profitability Chart (existing) */}
+      <div className="bg-white p-4 rounded shadow">
+        <h3 className="font-semibold mb-2">Customer Profitability</h3>
+        <ResponsiveContainer width="100%" height={200}>
+          <LineChart data={profitabilityData}>
+            <XAxis dataKey="month" />
+            <YAxis />
+            <Tooltip />
+            <CartesianGrid strokeDasharray="3 3" />
+            <Line type="monotone" dataKey="clv" stroke="#4f46e5" name="CLV" />
+            <Line type="monotone" dataKey="cac" stroke="#f59e0b" name="CAC" />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
+
+      {/* 2. Sales Funnel Chart (existing) */}
+      <div className="bg-white p-4 rounded shadow">
+        <h3 className="font-semibold mb-2">Sales Funnel</h3>
+        <div className="space-y-2">
+          {funnelData.map((f, i) => (
+            <div key={i}>
+              <div className="flex justify-between text-sm">
+                <span>{f.stage}</span>
+                <span>{f.value.toLocaleString()}</span>
+              </div>
+              <div className="w-full bg-gray-200 h-2 rounded">
+                <div
+                  className="bg-indigo-500 h-2 rounded"
+                  style={{ width: `${(f.value / funnelData[0].value) * 100}%` }}
+                />
+              </div>
             </div>
-          </div>
+          ))}
         </div>
-      )}
+      </div>
+    </div>
+
+    {/* --- Second Row --- */}
+    <div className="grid grid-cols-1 gap-6">
+
+      {/* 3. NEW Customer Segments Chart */}
+      <div className="bg-white p-4 rounded shadow">
+        <h3 className="font-semibold mb-2">Customer Segments</h3>
+        <ResponsiveContainer width="100%" height={200}>
+          <PieChart>
+            <Pie
+              data={customerSegmentData}
+              dataKey="value"
+              nameKey="name"
+              cx="50%"
+              cy="50%"
+              outerRadius={60}
+            >
+              {customerSegmentData.map((_, index) => (
+                <Cell key={index} fill={["#818cf8", "#f59e0b"][index % 2]} />
+              ))}
+            </Pie>
+            <Tooltip />
+          </PieChart>
+        </ResponsiveContainer>
+      </div>
+
+      {/* This second column is now free for another chart later! */}
+      {/* 4. NEW CLV by Channel Chart */}
+            <div className="bg-white p-4 rounded shadow">
+              <h3 className="font-semibold mb-2">CLV by Acquisition Channel</h3>
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={clvByChannelData} layout="vertical">
+                  <XAxis type="number" />
+                  <YAxis type="category" dataKey="channel" width={110} />
+                  <Tooltip cursor={{ fill: '#f3f4f6' }} />
+                  <Bar dataKey="clv" fill="#4f46e5" name="Customer Lifetime Value" />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+           </div>
+          </>
+        )}
     </div>
   );
 }
